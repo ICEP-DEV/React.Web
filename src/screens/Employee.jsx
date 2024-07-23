@@ -9,10 +9,7 @@ function Employee() {
         { Id: 102, Name: 'Abhishek', Location: 'Chennai', Salary: 23456 },
 
         { Id: 103, Name: 'Ajay', Location: 'Bangalore', Salary: 34567 }
-
     ];
-
-
     return (<div >
         <Header />
         <table id="customers">
@@ -21,6 +18,7 @@ function Employee() {
                 <th>Name</th>
                 <th>Location</th>
                 <th>Salary</th>
+                <th>Action</th>
             </thead>
             <tbody>
                 {employees.map((emp, xid) => (
@@ -29,6 +27,10 @@ function Employee() {
                         <td>{emp.Name}</td>
                         <td>{emp.Location}</td>
                         <td>{emp.Salary}</td>
+                        <td>
+                            <button className="btn btn-primary">Edit</button>
+                            <button className="btn btn-danger">Delete</button>
+                        </td>
                     </tr>
                 ))}
             </tbody>
