@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import Header from './Header';
 
 function Employee() {
     const employees = [
@@ -11,6 +11,8 @@ function Employee() {
         { Id: 103, Name: 'Ajay', Location: 'Bangalore', Salary: 34567 }
     ];
     return (<div >
+        <Header />
+        
         <button className="btn btn-primary" style={{width:"100%", margin:'50px 0'}}>Add Employee</button>
         <table id="customers">
             <thead>
@@ -28,7 +30,7 @@ function Employee() {
                         <td>{emp.Location}</td>
                         <td>{emp.Salary}</td>
                         <td>
-                            <button className="btn btn-primary">Edit</button>
+                            <button className="btn btn-success">Edit</button>
                             <button className="btn btn-danger">Delete</button>
                         </td>
                     </tr>
