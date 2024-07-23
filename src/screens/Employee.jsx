@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import Header from './Header';
 
 function Employee() {
     const employees = [
@@ -14,6 +14,7 @@ function Employee() {
 
 
     return (<div >
+        <Header />
         <table id="customers">
             <thead>
                 <th>Id</th>
