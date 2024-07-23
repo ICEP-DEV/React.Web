@@ -20,6 +20,7 @@ function Employee() {
                 <th>Name</th>
                 <th>Location</th>
                 <th>Salary</th>
+                <th>Action</th>
             </thead>
             <tbody>
                 {employees.map((emp, xid) => (
@@ -28,6 +29,10 @@ function Employee() {
                         <td>{emp.Name}</td>
                         <td>{emp.Location}</td>
                         <td>{emp.Salary}</td>
+                        <td>
+                            <button className="btn btn-primary">Edit</button>
+                            <button className="btn btn-danger">Delete</button>
+                        </td>
                     </tr>
                 ))}
             </tbody>
