@@ -8,8 +8,6 @@ function Header() {
         <Link to='/login' className="nav_button">Login</Link> 
         <Link to='/emloyee' className="nav_button">Employee</Link> 
     </div>)
-
-
 }
 
 export default Header;
