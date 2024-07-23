@@ -14,6 +14,7 @@ function Employee() {
 
 
     return (<div >
+        <button className="btn btn-primary" style={{width:"100%", margin:'50px 0'}}>Add Employee</button>
         <table id="customers">
             <thead>
                 <th>Id</th>
