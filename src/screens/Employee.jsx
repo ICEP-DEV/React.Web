@@ -9,10 +9,7 @@ function Employee() {
         { Id: 102, Name: 'Abhishek', Location: 'Chennai', Salary: 23456 },
 
         { Id: 103, Name: 'Ajay', Location: 'Bangalore', Salary: 34567 }
-
     ];
-
-
     return (<div >
         <table id="customers">
             <thead>
