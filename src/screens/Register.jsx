@@ -2,12 +2,15 @@ import { useState } from 'react';
 import './style.css'
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Register() {
     const navigate = useNavigate();
     const [FirstName, setFirstName] = useState('');
     const [LastName, setLastName] = useState('');
-    const [Email, setEmail] = useState('');
+    const [Salary, setSalary] = useState('');
 
     function submit() {
         if (FirstName === '') {
@@ -18,21 +21,39 @@ function Register() {
             alert('Enter last name');
             return;
         }
-        if (Email === '') {
-            alert('Enter email name');
+        if (Salary === '') {
+            alert('Enter Salary name');
             return;
         }
-        var emailValidation = /\S+@\S+\.\S+/;
-        if (!Email.match(emailValidation)) {
-            alert('Enter valid email address');
-            return;
+
+        var userInfo = JSON.parse(localStorage.getItem('user_info'))
+        var data = {
+            firstname: FirstName,
+            lastname: LastName,
+            salary: Salary,
+            userId: userInfo.id
         }
-        var data = { FirstName, LastName, Email }
         console.log(data);
-        navigate('/login')
+
+        axios.post('http://localhost:3001/api/register_employee',data).then((respond)=>{
+            if(respond.data.success){
+                toast.warn(respond.data.message);
+                setTimeout(
+                    navigate('/emloyee')
+                    , 5000);
+            }
+            else{
+                toast.warn(respond.data.message);
+            }
+        })
+
+
+
+
     }
     return (
         <div>
+             <ToastContainer />
             <Header />
             <h2>Register</h2>
             <div className="form-group">
@@ -44,8 +65,8 @@ function Register() {
                 <input type="text" onChange={(event) => setLastName(event.target.value)} className="control-form" />
             </div>
             <div className="form-group">
-                <label>Email</label>
-                <input type="text" onChange={(event) => setEmail(event.target.value)} className="control-form" />
+                <label>Salary</label>
+                <input type="text" onChange={(event) => setSalary(event.target.value)} className="control-form" />
             </div>
             <div className="form-group">
                 <button onClick={() => submit()}>Submit</button>

@@ -1,37 +1,74 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from './Header';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Employee() {
-    const employees = [
+    const navigate = useNavigate();
+    const [Employees, setEmployees] = useState([]);
 
-        { Id: 101, Name: 'Abhinav', Location: 'Bangalore', Salary: 12345 },
 
-        { Id: 102, Name: 'Abhishek', Location: 'Chennai', Salary: 23456 },
+    useEffect(() => {
+        axios.get('http://localhost:3001/api/all_employees').then(respond => {
+            console.log(respond);
+            if (respond.data.success) {
+                console.log(respond.data.results);
+                setEmployees(respond.data.results)
+            }
+            else {
+                toast.warn(respond.data.message);
+            }
+        },
+            err => {
 
-        { Id: 103, Name: 'Ajay', Location: 'Bangalore', Salary: 34567 }
-    ];
+            }
+        );
+    },[])
+
+    function edit(data) {
+        navigate('/edit_employee', { state: { current: data } })
+    }
+
+    function delete_employee(data) {
+        axios.delete('http://localhost:3001/api/delete_employee/' + data).then(respond => {
+
+            if (respond.data.success) {
+                toast(respond.data.message);
+            }
+            else {
+                toast.warn(respond.data.message);
+            }
+        },
+            err => {
+
+            }
+        );
+    }
     return (<div >
+        <ToastContainer />
         <Header />
-        
-        <button className="btn btn-primary" style={{width:"100%", margin:'50px 0'}}>Add Employee</button>
+
+        <button className="btn btn-primary" style={{ width: "100%", margin: '50px 0' }} onClick={() => navigate('/add_employee')}>Add Employee</button>
         <table id="customers">
             <thead>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Location</th>
+                <th>Firstname</th>
+                <th>lastame</th>
                 <th>Salary</th>
+                <th>Added By</th>
                 <th>Action</th>
             </thead>
             <tbody>
-                {employees.map((emp, xid) => (
+                {Employees.map((emp, xid) => (
                     <tr key={xid}>
-                        <td>{emp.Id}</td>
-                        <td>{emp.Name}</td>
-                        <td>{emp.Location}</td>
-                        <td>{emp.Salary}</td>
+                        <td>{emp.firstname}</td>
+                        <td>{emp.lastname}</td>
+                        <td>{emp.salary}</td>
+                        <td>{emp.email}</td>
                         <td>
-                            <button className="btn btn-success">Edit</button>
-                            <button className="btn btn-danger">Delete</button>
+                            <button className="btn btn-success" onClick={() => edit(emp)}>Edit</button>
+                            <button className="btn btn-danger" onClick={() => delete_employee(emp.id)}>Delete</button>
                         </td>
                     </tr>
                 ))}

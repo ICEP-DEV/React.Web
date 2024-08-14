@@ -1,12 +1,24 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 
 function Header() {
-
+    const navigate = useNavigate();
+    useEffect(() => {
+        var user = JSON.parse(localStorage.getItem('user_info'))
+        console.log(user);
+        if (user === undefined || user === null) {
+            navigate('/');
+            return;
+        }
+    })
+    const logout = () => {
+        localStorage.removeItem('user_info');
+        navigate('/')
+    }
     return (<div id="header">
-        <Link to='/'  className="nav_button">Register</Link>
-        <Link to='/login' className="nav_button">Login</Link> 
-        <Link to='/emloyee' className="nav_button">Employee</Link> 
+
+        <button className="nav_button" onClick={logout}>Logout</button>
     </div>)
 }
 

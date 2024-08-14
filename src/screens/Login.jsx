@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Header from './Header';
+import axios from 'axios';
+import api from '../API/API';
+import { useNavigate } from "react-router-dom";
 function Login() {
+    const navigate = useNavigate();
     const user = [{ email: "kekana@gmail.com", password: '123zxc@Z' }, { email: 'nkosana@gmail.com', password: '123zxc@Z' }]
 
     const [Email, setEmail] = useState('');
     const [Password, setPassword] = useState('');
 
     const login = () => {
-        var isFound = false;
+        /*var isFound = false;
         for (var k = 0; k < user.length; k++) {
             if (user[k].email === Email) {
                 if(user[k].password === Password){ 
@@ -23,13 +26,33 @@ function Login() {
         }
         else {
             toast.warn("user not found");
-        }
+        }*/
 
+
+        var data = { email: Email, password: Password }
+        axios.post('http://localhost:3001/api/login', data).then(respond => {
+            console.log(respond);
+            if (respond.data.success) {
+                console.log(respond.data.results[0]);
+                var user = {
+                    email: respond.data.results[0].email,
+                    id: respond.data.results[0].id
+                }
+                localStorage.setItem('user_info', JSON.stringify(user));
+                navigate('/emloyee')
+            }
+            else {
+                toast.warn(respond.data.message);
+            }
+        },
+            err => {
+
+            }
+        );
 
     }
     return (<div>
         <ToastContainer />
-        <Header />
         <h2>Login</h2>
         <div className="form-group">
             <label>Email</label>
