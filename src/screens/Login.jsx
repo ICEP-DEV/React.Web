@@ -27,28 +27,28 @@ function Login() {
         else {
             toast.warn("user not found");
         }*/
-
-
-        var data = { email: Email, password: Password }
-        axios.post('http://localhost:3001/api/login', data).then(respond => {
-            console.log(respond);
-            if (respond.data.success) {
-                console.log(respond.data.results[0]);
-                var user = {
-                    email: respond.data.results[0].email,
-                    id: respond.data.results[0].id
-                }
-                localStorage.setItem('user_info', JSON.stringify(user));
-                navigate('/emloyee')
-            }
-            else {
-                toast.warn(respond.data.message);
-            }
-        },
-            err => {
-
-            }
-        );
+        navigate('/emloyee')
+        /*
+                var data = { email: Email, password: Password }
+                axios.post('http://localhost:3001/api/login', data).then(respond => {
+                    console.log(respond);
+                    if (respond.data.success) {
+                        console.log(respond.data.results[0]);
+                        var user = {
+                            email: respond.data.results[0].email,
+                            id: respond.data.results[0].id
+                        }
+                        localStorage.setItem('user_info', JSON.stringify(user));
+                        navigate('/emloyee')
+                    }
+                    else {
+                        toast.warn(respond.data.message);
+                    }
+                },
+                    err => {
+        
+                    }
+                );*/
 
     }
     return (<div>
